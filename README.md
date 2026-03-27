@@ -208,8 +208,10 @@ If you have ideas for improving regression detection, trace comparison, or visua
 
 ---
 
-## Give a Star
+## ⭐ Support the Project
 
-If OracleTrace helps you, please consider giving this repository a star on GitHub.
+If you find OracleTrace useful, give it a ⭐ on GitHub:
 
-[Give a Star on GitHub](https://github.com/KaykCaputo/oracletrace/stargazers)
+👉 https://github.com/KaykCaputo/oracletrace
+
+Your support helps improve the project and makes it more visible to others.
