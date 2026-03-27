@@ -36,8 +36,13 @@ def main():
     target_dir = os.path.dirname(target)
     # Setup paths so imports work correctly in the target script
     sys.path.insert(0, target_dir)
-
-    ignore_patterns = [re.compile(pattern) for pattern in args.ignore] if args.ignore else None
+    ignore_patterns = []
+    for pattern in args.ignore:
+        try:
+            ignore_patterns.append(re.compile(pattern))
+        except re.error as e:
+            print(f"Regex error: {pattern} -> {e}")
+            return 1
 
     # Start tracing, run the script, then stop
     tracer = Tracer(root, ignore_patterns=ignore_patterns)
