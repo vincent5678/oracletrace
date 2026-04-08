@@ -222,6 +222,7 @@ Thanks to all the people who have contributed to this project:
 ## Recognition
 
 - Included in [awesome-debugger](https://github.com/taowen/awesome-debugger)
+- Featured in [PyCoder's Weekly #729](https://pycoders.com/issues/729)
 
 ---
 
