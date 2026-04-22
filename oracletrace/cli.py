@@ -30,7 +30,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--top",
-        metavar="NUMBER", 
+        metavar="NUMBER",
         help="Limits the number of functions shown in the summary table"
     )
     parser.add_argument(
@@ -61,8 +61,19 @@ def main() -> int:
 
     target: str = args.target
 
+    # Validate --top argument manually to ensure all paths are testable
+    if args.top is not None:
+        try:
+            args.top = int(args.top)
+        except ValueError:
+            print(f"argument --top: invalid int value: '{args.top}'", file=sys.stderr)
+            return 2
+        if args.top < 1:
+            print(f"--top must be a positive integer, got: {args.top}", file=sys.stderr)
+            return 1
+
     if not os.path.exists(target):
-        print(f"Target not found: {target}")
+        print(f"Target not found: {target}", file=sys.stderr)
         return 1
 
     target = os.path.abspath(target)
@@ -77,7 +88,7 @@ def main() -> int:
         try:
             ignore_patterns.append(re.compile(pattern))
         except re.error as e:
-            print(f"Regex error: {pattern} -> {e}")
+            print(f"Regex error: {pattern} -> {e}", file=sys.stderr)
             return 1
 
     def run_trace():
@@ -131,7 +142,7 @@ def main() -> int:
     # Display the analysis
     if runs <= 1:
         if args.top:
-            tracer.show_results(int(args.top[0]))
+            tracer.show_results(int(args.top))
         else:
             tracer.show_results(None)
 
@@ -153,7 +164,7 @@ def main() -> int:
     # Compare jsons
     if args.compare:
         if not os.path.exists(args.compare):
-            print(f"Compare file not found: {args.compare}")
+            print(f"Compare file not found: {args.compare}", file=sys.stderr)
             return 1
 
         with open(args.compare, "r", encoding="utf-8") as f:
@@ -163,7 +174,8 @@ def main() -> int:
 
         if args.fail_on_regression and comparison_result.has_regression:
             print(
-            f"Build failed: performance regression above {args.threshold:.2f}% detected."
+                f"Build failed: performance regression above {args.threshold:.2f}% detected.",
+                file=sys.stderr,
             )
             return 2
 
